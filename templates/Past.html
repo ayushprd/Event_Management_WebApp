@@ -193,17 +193,18 @@ body{
                 var daa=m+'/'+d+'/'+y
                 var dataa='<span class="start">'+daa+'</span><span class="end">'+daa+'</span></span><span class="timezone">America/Los_Angeles</span><span class="title">Summary of the event</span><span class="description">Description of the event</span></div></div>';
                 card=card+dataa;
-        if(val<0){ 
+        if(val<-24){ 
             var v=Math.floor(Math.abs(val/24));
             if(v>30){
                 v=Math.ceil(Math.abs(val/30))
-                card=card+'<div class="card-footer text-muted ">'+v+' month(s) to go</div></div>'
+                card=card+'<div class="card-footer text-muted text-center">'+v+' month(s) to go</div></div>'
             }else{
-                card=card+'<div class="card-footer text-muted ">'+v+' day(s) to go</div></div>'
+                card=card+'<div class="card-footer text-muted ">'+v+' day(s)to go</div></div>'
             }
-            card;
+           // card=card+modal
+           console.log(val,card );
             future.push(card)
-        }else if(val<24 && val>0){
+        }else if(val<24 && val>-24){
             present.push(card);
         }else{
             var v=Math.floor(Math.abs(val/24));

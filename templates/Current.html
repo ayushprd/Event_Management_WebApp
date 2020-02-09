@@ -186,13 +186,19 @@ body{
                     '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Read More</button>'+
                 '</div>'
         console.log(val)
-        if(val<0){ 
+        if(val<-24){ 
             var v=Math.floor(Math.abs(val/24));
-            card=card+'<div class="card-footer text-muted ">'+v+'day to go</div></div>'
+            if(v>30){
+                v=Math.ceil(Math.abs(val/30))
+                card=card+'<div class="card-footer text-muted text-center">'+v+' month(s) to go</div></div>'
+            }else{
+                card=card+'<div class="card-footer text-muted ">'+v+' day(s)to go</div></div>'
+            }
+           // card=card+modal
+           console.log(val,card );
             future.push(card)
-        }else if(val<24 && val>0){
+        }else if(val<24 && val>-24){
             present.push(card);
-        }else{
             past.push(card);       
         }
     }
