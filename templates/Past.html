@@ -2,16 +2,17 @@
 <html lang="en">
 
 <head>
-    <title>Current Events</title>
+    <title>Past Events</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.csshttps://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css">
     
-   <style>
+    <style>
        .Carousel{
     display:flex;
     width: 100%;
@@ -50,7 +51,7 @@
 }
 .card {
     display:flex;
-    width: 300px;
+    width: 330px;
     height: 430px;
     padding: 10px;
     margin: 60px;
@@ -61,11 +62,10 @@
     background-color: #05386B;
 }
 .card:hover{
-        width: 330px;
+        width: 340px;
         height: 440px;
-        background-color: orange;
         box-shadow: 10px 10px 5px grey;
-
+        background-color: orange;
 }
 
 body{
@@ -121,10 +121,10 @@ body{
             <a class="navbar-brand" href="#">Event Management</a>
             <div class="collapse navbar-collapse" id="Navbar">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item "><a class="nav-link" href="./past"><span class="fa fa-home fa-lg"></span> Past</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="./"><span class="fa fa-info fa-lg"></span> Current</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="./past"><span class="fa fa-home fa-lg"></span> Past</a></li>
+                    <li class="nav-item "><a class="nav-link" href="./"><span class="fa fa-info fa-lg"></span> Current</a></li>
                     <li class="nav-item "><a class="nav-link" href="./upcoming"><span class="fa fa-list fa-lg"></span> Upcoming</a></li>
-                    <li style="nav-item" class="nav-item"><a class="nav-link" href="./admin"><span class="fa fa-address-card fa-lg"></span> Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./admin"><span class="fa fa-address-card fa-lg"></span> Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -132,7 +132,7 @@ body{
     <div class="container">
         <div class="row">
             <div class="col" id="wrapper">
-
+                    <img src="upcoming.jpg">
             </div>
         </div>
        
@@ -169,48 +169,63 @@ body{
     var present=[]
     var future=[]
     var head='<div class="card mb-4 text-black bg-light"';
+    console.log(head);
     for(var i=0;i<names.length;i++){
-        console.log(names.length)
         var date1=new Date(dates[i])
         var val=((date2 - date1)/(1000*60*60))
+        console.log(date1,val)
         var title=names[i];
         var desc=descs[i];
         var data='<div id="countdown"><div class="well"><span id="hour" class="timer bg-success"></span><span id="min" class="timer bg-info"></span><span id="sec" class="timer bg-primary"></span></div></div>';
         var modal='<div class="modal fade container-fluid" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">    <div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">...</div><div class="modal-footer footer">'+data+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Remind Me</button></div></div></div></div>';
         var card='<div class="card mb-4 text-black bg-light" id ="'+names[i]+'">'+
-            '<img class="card-img-top" src="upcoming.jpg" alt="Card image">'+
+            '<img class="card-img-top" src="static/past3.png" alt="Card image">'+
                 '<div class="card-body">'+
                     '<h4 class="card-title">'+desc+'</h4>'+
                     '<p class="card-text">Sample text.</p>'+
-                    '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Read More</button>'+
-                '</div>'
-        console.log(val)
+                    '<div title="Add to Calendar" class="addeventatc">Add To Calendar'
+        //removed two divs
+                var d=date1.getDay();
+                var m=date1.getMonth();
+                var y=date1.getFullYear();
+                var daa=m+'/'+d+'/'+y
+                var dataa='<span class="start">'+daa+'</span><span class="end">'+daa+'</span></span><span class="timezone">America/Los_Angeles</span><span class="title">Summary of the event</span><span class="description">Description of the event</span></div></div>';
+                card=card+dataa;
         if(val<0){ 
             var v=Math.floor(Math.abs(val/24));
-            card=card+'<div class="card-footer text-muted ">'+v+'day to go</div></div>'
+            if(v>30){
+                v=Math.ceil(Math.abs(val/30))
+                card=card+'<div class="card-footer text-muted ">'+v+' month(s) to go</div></div>'
+            }else{
+                card=card+'<div class="card-footer text-muted ">'+v+' day(s) to go</div></div>'
+            }
+            card;
             future.push(card)
         }else if(val<24 && val>0){
             present.push(card);
         }else{
+            var v=Math.floor(Math.abs(val/24));
+            card=card+'<div class="card-footer text-muted bg-light">'+v+' day(s) ago</div></div>'
             past.push(card);       
         }
+        console.log(future)
     }
     var klass='<div class="card mx-auto">';
-    var len=present.length
-    console.log(len)
-    if(len>0 && len<=3){
+    var len=past.length
+    if(len>0&& len<=3){
         place.className="mx-auto my-auto";
-        place.innerHTML=present.join(',');
+        place.innerHTML=past.join(',');
     }else if(len>3){
         place.className="mr-auto d-md-inline-flex ";
-        place.innerHTML=present.join(',');
-    }else if(len==0){
-        var vt='<h1 class="text-center">NO ONGOING EVENTS</h1>'
-        console.log(vt);
-        place.innerHTML=vt;
+        place.innerHTML=past.join(',');
+    }else{
+        place.innerHTML="<h1>NO PAST EVENTS<h1>";
     }
+    console.log(future,present,past);
     const diffTime = Math.abs(date2 - date1);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    console.log(diffDays);
+
     </script>
 
 </body>
