@@ -1,8 +1,11 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+
+
 db = SQLAlchemy(app)
 
 class Todo(db.Model):
@@ -16,6 +19,11 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 
+
+	
+
+
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
@@ -23,7 +31,11 @@ def index():
         event_desc = request.form['desc']
         event_date = request.form['date']
         new_event = Todo(name=event_name, desc=event_desc, date=event_date)
+
+     
         
+			
+
         
         try:
             db.session.add(new_event)
@@ -37,8 +49,23 @@ def index():
     else:
        events = Todo.query.all()
         #rows = Todo.query.count()
+       names = []
+       descs = []
+       dates = []
+       for event in events:
+           names.append(event.name)
+           descs.append(event.desc)
+           dates.append(event.date)
 
-       return render_template('index.html', events=events) # ,events=events, rows=rows)
+       #d = {'events': [{'name': n, 'desc': d, 'time': t} for a, d, t in zip(names, descs, dates)]}
+       #jso = json.dumps(d, indent=4)
+
+       address =  ['address1','address2']
+       temp = ['temp1','temp2']
+
+       d = {'event': [{'names': a, 'descs': t, 'dates': ds} for a, t, ds in zip(names, descs, dates)]}
+
+       return render_template('index.html', d=d) # ,events=events, rows=rows)
 
 
 @app.route('/delete/<int:id>')
