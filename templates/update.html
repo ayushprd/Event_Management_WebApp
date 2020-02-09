@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+
+
+{% block head %}
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+{% block body %}
+
+<!--<div class"content"> 
+    <h1>Update Event</h1>
+    
+
+    <form action="/update/{{event.id}}" method="POST">
+        <input type="text" name="content" id="content" value="{{event.content}}">
+        <input type="submit" value="Update event">
+    </form>
+
+</div> -->
+
+<h1> Example input   </h1>
+
+  <form action="/update/{{event.id}}" method="POST">
+ 
+ 
+    <div class="form-group">
+
+       <label>Name:</label>
+       <input type="text" class="form-control" name="name" required="1">
+
+
+    </div>
+
+
+     <div class="form-group">
+
+
+       <label>desc:</label>
+       <input type="text" class="form-control" name="desc" required="1">
+
+
+    </div>
+
+
+     <div class="form-group">
+
+
+       <label>date</label>
+       <input type="text" class="form-control" name="date" required="1">
+
+
+    </div>
+
+
+
+    <div class="form-group">
+
+
+       <button class="btn btn-primary" type="submit">Add Event</button>
+
+
+    </div>
+
+
+ </form>
+
+  
+
+
+
+
+
+
+
+{% endblock %}
