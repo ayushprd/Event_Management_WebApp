@@ -75,6 +75,20 @@ def update(id):
 
 
 
+@app.route('/admin', methods=['GET'])
+def admin():
+    return render_template('admin.html')
+
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid credentials. Please try again.'
+        else:
+            return redirect('/')
+    return render_template('login_page.html', error=error)
 
 
 

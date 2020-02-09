@@ -1,0 +1,80 @@
+{%extends 'base.html'%}
+<head>
+  <title>Admin Page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+  body{
+    background: url(https://image.freepik.com/free-vector/black-gold-geometric-web-page-size-background_70155-229.jpg);
+}
+
+</style>
+{% block body %}
+   <nav class="navbar navbar-default">
+     <div class="container-fluid">
+        <li><a href="#" data-toggle="modal" data-target="#myModal1"><b>Add event</b></a></li>
+        <div id="myModal1" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+          
+              <!-- Modal content-->
+              <div class="modal-content" style="width: 600px; height: 500px;">
+                <div class="modal-header">
+                  <h4 class="modal-title">Add your event here</h4>
+                </div>
+                <h2>Enter event name</h2><br>
+                <input type="text">
+                <div class="modal-body">
+                  <p> Event description</p>
+                </div><br>
+                <div class="container">
+                <div class="modal-footer">
+                  <input type="date" id="start"><br>
+                  <input type="file" name="pic" accept="image/*">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+          
+                </div>
+                </div>
+
+              </div>
+          
+            </div>
+          </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><b>Sign Out</b></a></li>
+       
+      </ul>
+     </div>
+   </nav>
+   <div class="container" style="background-color:lightslategray;">
+     <p style="font-family: sans-serif;"><strong><h1>Event name</h1></strong></p>
+     <br>
+     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">View event</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update your event here</h4>
+      </div>
+      <div class="modal-body">
+        <p> <input type="textarea" style="border: 1px solid black;"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+        <input type="file" name="pic" accept="image/*">
+
+      </div>
+    </div>
+
+  </div>
+</div>
+   </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
