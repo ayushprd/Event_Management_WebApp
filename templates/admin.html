@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.csshttps://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/fontawesome.min.css">
         <link rel="stylesheet" href="style.css">
+  
+          
     </head>
     <body style="background-color: darkslategray;">
 
@@ -92,8 +94,8 @@
                     <td>{{event.name}}</td>
                     <td colspan="2"> {{event.desc}} </td>
                     <td>{{event.date}}</td>
-                    <td><a href="/update/{{event.id}}" data-toggle="modal" data-target="#exampleModalCenter">Update</a>
-                      <a href="/delete/{{event.id}}">Delete</a>
+                    <td><a href="/update/{{event.id}}" data-toggle="modal" data-target="#exampleModalCenter"><button type="button" class="btn btn-primary">Update</button></a>
+                      <a href="/delete/{{event.id}}" data-toggle="modal" data-target="#exampleModalCenter"><button type="button" class="btn btn-primary">Delete</button></a>
                     </td>
                   </tr>
                   {% endfor %}
