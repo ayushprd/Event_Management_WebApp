@@ -120,117 +120,106 @@ body{
             </button>
             <a class="navbar-brand ml-auto" href="#">Events Info Page</a>
             <div class="collapse navbar-collapse mx" id="Navbar">
-                <ul class="navbar-nav">
-                        <li class="nav-item active"><a class="nav-link a" href="./Past.html"><span class="fa fa-home fa-lg"></span> Past</a></li>
-                        <li class="nav-item"><a class="nav-link a" href="./Current.html"><span class="fa fa-info fa-lg"></span> Current</a></li>
-                        <li class="nav-item"><a class="nav-link a" href="./Upcoming.html"><span class="fa fa-list fa-lg"></span> Upcoming</a></li>
-                        <span class="ml-left nav-item"><a class="nav-link a" href="./contactus.html"><span class="fa fa-address-card fa-lg"></span> Admin</a></span>
-
-                    </ul>
+                <ul class="navbar-nav ">
+                        <li class="nav-item active"><a class="nav-link" href="./past"><span class="fa fa-home fa-lg"></span> Past</a></li>
+                        <li class="nav-item "><a class="nav-link" href="./"><span class="fa fa-info fa-lg"></span> Current</a></li>
+                        <li class="nav-item "><a class="nav-link" href="./upcoming"><span class="fa fa-list fa-lg"></span> Upcoming</a></li>
+                        <li style="float:right" class="nav-item"><a class="nav-link" href="./admin"><span class="fa fa-address-card fa-lg"></span> Admin</a></li>
+                </ul>
             </div>
         </div>
     </nav>
-    <button class="But" onclick="myFunction()">Click me</button>
     <div class="container">
         <div class="row">
             <div class="col" id="wrapper">
 
             </div>
-            <div id="countdown">
-                <div class="well">
-                    <span id="hour" class="timer bg-success"></span>
-                    <span id="min" class="timer bg-info"></span>
-                    <span id="sec" class="timer bg-primary"></span>
-                </div>
-            </div>
         </div>
-        {{ d }}
+       
     </div>
-    <p>Hover the mouse pointer over this paragraph.</p>
-    
    
 </body>
 </html>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
-    <<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script>
+  
+    
+
+    card=card+modal;
+    var klass='<div class="card mx-auto">';
+    var path = window.location.pathname;
+    var page = path.split("/").pop();
+    console.log( page );
+
+    var place=document.getElementById("wrapper");   
+    
+    deck=[];
+    var names = {{ names|tojson}};
+    var descs = {{ descs|tojson}};
+    var dates = {{dates|tojson}};
+
+
+
+    var date2=new Date();
+    var past=[]
+    var present=[]
+    var future=[]
+    var head='<div class="card mb-4 text-black bg-light"';
+    console.log(head);
+    for(var i=0;i<names.length;i++){
+        var date1=new Date(dates[i])
+        var val=((date2 - date1)/(1000*60*60))
+        console.log(date1,val)
+        var title=names[i];
+        var desc=descs[i];
         var data='<div id="countdown"><div class="well"><span id="hour" class="timer bg-success"></span><span id="min" class="timer bg-info"></span><span id="sec" class="timer bg-primary"></span></div></div>';
-var modal='<div class="modal fade container-fluid" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">    <div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">...</div><div class="modal-footer footer">'+data+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Remind Me</button></div></div></div></div>';
-var card='<div class="card mb-4 text-white bg-dark">'+
+        var modal='<div class="modal fade container-fluid" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">    <div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">...</div><div class="modal-footer footer">'+data+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Remind Me</button></div></div></div></div>';
+        var card='<div class="card mb-4 text-black bg-light" id ="'+names[i]+'">'+
             '<img class="card-img-top" src="sample.jpg" alt="Card image">'+
                 '<div class="card-body">'+
-                    '<h4 class="card-title">Rohan Prasad</h4>'+
+                    '<h4 class="card-title">'+desc+'</h4>'+
                     '<p class="card-text">Sample text.</p>'+
                     '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Read More</button>'+
-                '</div>'+
-            '</div>';
-
-card=card+modal;
-var klass='<div class="card mx-auto">';
-var path = window.location.pathname;
-var page = path.split("/").pop();
-console.log( page );
-
-var place=document.getElementById("wrapper");   
-deck=[];
-var names = {{ names|tojson}};
-var descs = {{ descs|tojson}};
-var dates = {{dates|tojson}};
-alert(names);
-alert(descs);
-
-
-
-var date2=new Date();
-var past=[]
-var present=[]
-var future=[]
-var head='<div class="card mb-4 text-black bg-light"';
-console.log(head);
-for(var i=0;i<names.length;i++){
-    var date1=new Date(dates[i])
-    var val=((date2 - date1)/(1000*60*60))
-    console.log(date1,val)
-    if(val<0){
-        future.push(date1)
-    }else if(val<24 && val>0){
-        //head=head+'id="'+event[i]+' s"';
-        present.push(date1);
-    }else{
-        past.push(date1);
-        //c=c+'id="'+event[i]+' s"';
+                '</div>'
+        
+        if(val<0){ 
+            var v=Math.floor(Math.abs(val/24));
+            if(v>30){
+                v=Math.ceil(Math.abs(val/30))
+                card=card+'<div class="card-footer text-muted ">'+v+'month to go</div></div>'
+            }else{
+                card=card+'<div class="card-footer text-muted ">'+v+'day to go</div></div>'
+            }
+            card=card+modal;
+            future.push(card)
+        }else if(val<24 && val>0){
+            present.push(card);
+        }else{
+            var v=Math.floor(Math.abs(val/24));
+            card=card+'<div class="card-footer text-muted ">'+v+'day to go</div></div>'
+            past.push(card);       
+        }
+        console.log(future)
     }
-}
-
-
-console.log(future,present,past);
-const diffTime = Math.abs(date2 - date1);
-const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-console.log(diffDays);
-
-
-
-
-
-$( document ).ready(function() {
-    setInterval(function time(){
-    var d = new Date();
-    var hours = 24 - d.getHours();
-    var min = 60 - d.getMinutes();
-    if((min + '').length == 1){
-      min = '0' + min;
+    var klass='<div class="card mx-auto">';
+    var len=future.length
+    if(len<=3){
+        place.className="mx-auto my-auto";
+        place.innerHTML=past.join(',');
+    }else if(len>3){
+        place.className="mr-auto d-md-inline-flex ";
+        place.innerHTML=past.join(',');
+    }else if(len=0){
+        place.innerHTML="<h1>NO PAST EVENTS<h1>";
     }
-    var sec = 60 - d.getSeconds();
-    if((sec + '').length == 1){
-          sec = '0' + sec;
-    }
-    jQuery('#countdown #hour').html(hours);
-    jQuery('#countdown #min').html(min);
-    jQuery('#countdown #sec').html(sec);
-  }, 1000); });
+    console.log(future,present,past);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    console.log(diffDays);
 
     </script>
 

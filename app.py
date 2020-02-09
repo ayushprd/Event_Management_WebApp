@@ -19,11 +19,6 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 
-
-	
-
-
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
@@ -63,8 +58,53 @@ def index():
 
 
        car = 5
+       peter = Todo.query.filter_by(name='Kaalrarv').first()
+       return render_template('Current.html', names=names, descs=descs, dates=dates, peter=peter) # ,events=events, rows=rows)
 
-       return render_template('Current.html', names=names, descs=descs, dates=dates) # ,events=events, rows=rows)
+
+
+@app.route('/past', methods=['POST', 'GET'])
+def past():
+    
+       events = Todo.query.all()
+        #rows = Todo.query.count()
+       names = []
+       descs = []
+       dates = []
+       for event in events:
+           names.append(event.name)
+           descs.append(event.desc)
+           dates.append(event.date)
+
+    
+       return render_template('Past.html', names=names, descs=descs, dates=dates) # ,events=events, rows=rows)
+
+
+
+
+
+
+
+@app.route('/upcoming', methods=['POST', 'GET'])
+def upcoming():
+    
+       events = Todo.query.all()
+        #rows = Todo.query.count()
+       names = []
+       descs = []
+       dates = []
+       for event in events:
+           names.append(event.name)
+           descs.append(event.desc)
+           dates.append(event.date)
+
+    
+       return render_template('Upcoming.html', names=names, descs=descs, dates=dates) # ,events=events, rows=rows)
+
+
+
+
+
 
 
 @app.route('/delete/<int:id>')
@@ -74,7 +114,7 @@ def delete(id):
     try:
         db.session.delete(event_to_delete)
         db.session.commit()
-        return redirect('/')
+        return redirect('/admin')
     except:
         return "there was a problem deleting that event"
 
@@ -101,9 +141,55 @@ def update(id):
 
 
 
-@app.route('/admin', methods=['GET'])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
-    return render_template('admin.html')
+    if request.method == 'POST':
+        event_name = request.form['name']
+        event_desc = request.form['desc']
+        event_date = request.form['date']
+        new_event = Todo(name=event_name, desc=event_desc, date=event_date)
+
+     
+          
+        try:
+            db.session.add(new_event)
+            db.session.commit()
+
+            return redirect('/')
+
+        except:
+            return 'there was an error'
+
+    else:
+       events = Todo.query.all()
+        #rows = Todo.query.count()
+       names = []
+       descs = []
+       dates = []
+       for event in events:
+           names.append(event.name)
+           descs.append(event.desc)
+           dates.append(event.date)
+
+       #return render_template('Current.html', names=names, descs=descs, dates=dates, peter=peter) # ,events=events, rows=rows)
+       return render_template('admin.html', events=events) 
+
 
 
 @app.route('/login', methods=['GET','POST'])
@@ -113,14 +199,18 @@ def login():
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error = 'Invalid credentials. Please try again.'
         else:
-            return redirect('/')
+            return redirect('/admin')
     return render_template('login_page.html', error=error)
 
-
-
-
-
-
+@app.route('/search', methods=['GET', 'POST'])
+def searching():
+    if request.method == 'POST':
+        squery = request.form['ing']
+        sanswer = Todo.query.filter_by(name=squery).first()
+        
+        return render_template('result.html', sanswer=sanswer)
+    else:
+        return render_template('search.html')
 
 
 

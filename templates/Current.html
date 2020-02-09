@@ -113,7 +113,7 @@ body{
 </head>
 
 <body>  
-    <nav class="navbar navbar-light navbar-expand-sm fixed-top">
+    <nav class="navbar navbar-darks navbar-expand-sm fixed-top">
         <div class="container">
             <button class="navbar-toggler d-block d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="#Navbar">
                 <span class="navbar-toggler-icon"></span>
@@ -121,21 +121,21 @@ body{
             <a class="navbar-brand ml-auto" href="#">Events Info Page</a>
             <div class="collapse navbar-collapse mx" id="Navbar">
                 <ul class="navbar-nav ">
-                        <li class="nav-item "><a class="nav-link" href="./Past.html"><span class="fa fa-home fa-lg"></span> Past</a></li>
-                        <li class="nav-item current"><a class="nav-link" href="./Current.html"><span class="fa fa-info fa-lg"></span> Current</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./Upcoming.html"><span class="fa fa-list fa-lg"></span> Upcoming</a></li>
-                        <li style="float:right" class="nav-item"><a class="nav-link" href="./Admin.html"><span class="fa fa-address-card fa-lg"></span> Admin</a></li>
+                        <li class="nav-item "><a class="nav-link" href="./past"><span class="fa fa-home fa-lg"></span> Past</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="./"><span class="fa fa-info fa-lg"></span> Current</a></li>
+                        <li class="nav-item "><a class="nav-link" href="./upcoming"><span class="fa fa-list fa-lg"></span> Upcoming</a></li>
+                        <li style="float:right" class="nav-item"><a class="nav-link" href="./admin"><span class="fa fa-address-card fa-lg"></span> Admin</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <button class="But" onclick="myFunction()">Click me</button>
     <div class="container">
         <div class="row">
             <div class="col" id="wrapper">
 
             </div>
         </div>
+       
     </div>
    
 </body>
@@ -161,7 +161,7 @@ body{
     var names = {{ names|tojson}};
     var descs = {{ descs|tojson}};
     var dates = {{dates|tojson}};
-   
+
 
 
     var date2=new Date();
@@ -176,28 +176,58 @@ body{
         console.log(date1,val)
         var title=names[i];
         var desc=descs[i];
-        console.log(desc);
         var data='<div id="countdown"><div class="well"><span id="hour" class="timer bg-success"></span><span id="min" class="timer bg-info"></span><span id="sec" class="timer bg-primary"></span></div></div>';
-        var modal='<div class="modal fade container-fluid" id="'+names[i]+'"tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">'+names[i]+'</div><div class="modal-footer footer">'+data+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Remind Me</button></div></div></div></div>';
+        var modal='<div class="modal fade container-fluid" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">    <div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">...</div><div class="modal-footer footer">'+data+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Remind Me</button></div></div></div></div>';
         var card='<div class="card mb-4 text-black bg-light" id ="'+names[i]+'">'+
             '<img class="card-img-top" src="sample.jpg" alt="Card image">'+
                 '<div class="card-body">'+
-                    '<h4 class="card-title">'+names[i]+'</h4>'+
-                    '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#'+names[i]+'">Read More</button>'+
-                '</div>'+
-            '</div>'
-        card=card+modal;
-        if(val<0){   
+                    '<h4 class="card-title">'+desc+'</h4>'+
+                    '<p class="card-text">Sample text.</p>'+
+                    '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Read More</button>'+
+                '</div>'
+        
+        if(val<0){ 
+            var v=Math.floor(Math.abs(val/24));
+            card=card+'<div class="card-footer text-muted ">'+v+'day to go</div></div>'
+            card=card+modal;
             future.push(card)
         }else if(val<24 && val>0){
             present.push(card);
         }else{
             past.push(card);       
+        }if(val<0){ 
+            var v=Math.floor(Math.abs(val/24));
+            if(v>30){
+                v=Math.ceil(Math.abs(val/30))
+                card=card+'<div class="card-footer text-muted ">'+v+'month to go</div></div>'
+            }else{
+                card=card+'<div class="card-footer text-muted ">'+v+'day to go</div></div>'
+            }
+            card=card+modal;
+            future.push(card)
+        }else if(val<24 && val>0){
+            present.push(card);
+        }else{
+            var v=Math.floor(Math.abs(val/24));
+            card=card+'<div class="card-footer text-muted ">'+v+'day to go</div></div>'
+            past.push(card);       
         }
         console.log(future)
     }
+    var klass='<div class="card mx-auto">';
+    var len=future.length
+    if(len<=3){
+        place.className="mx-auto my-auto";
+        place.innerHTML=present.join(',');
+    }else if(len>3){
+        place.className="mr-auto d-md-inline-flex ";
+        place.innerHTML=present.join(',');
+    }else if(len=0){
+        var vt='<h1>NO ONGOING EVENTS</h1>'
+        place.innerHTML=vt;
+    }
 
-    place.innerHTML=future.join(' ');
+    
 
     console.log(future,present,past);
     const diffTime = Math.abs(date2 - date1);
