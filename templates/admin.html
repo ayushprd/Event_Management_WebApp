@@ -28,21 +28,40 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                                <form action="/action_page.php">
+
+
+
+
+                                <form action="/admin" method="POST">
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Name of Event</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                                        <input type="text" class="form-control" name="name" required="1">
+      
                                       </div>
                                       <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Description</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <input type="text" class="form-control" name="desc" required="1">
+
                                       </div>
                                       <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Date</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                                        <input type="text" class="form-control" name="date" required="1">
                                       </div>
                                     <button type="submit" class="btn btn-default bg-primary">Submit</button>
                                   </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
                             </div>
                            
                           </div>
@@ -57,38 +76,28 @@
             <table class="table table-bordered table-dark table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">Event</th>
+                    
                     <th scope="col">Name</th>
                     <th scope="col" colspan="2">Description</th>
                     <th scope="col">Date</th>
                     <th scope="col" colspan="2">Action</th>
                   </tr>
                 </thead>
+                
                 <tbody>
+                  {% for event in events %}
+
                   <tr>
-                    <th scope="row">1</th>
-                    <td>fxdgdf</td>
-                    <td colspan="2">fgf</td>
-                    <td>fxdgdf</td>
-                    <td><button type="submit" class="btn btn-default bg-primary">Submit</button>
-                        <button type="submit" class="btn btn-default bg-primary">Delete</button></td>
+           
+                    <td>{{event.name}}</td>
+                    <td colspan="2"> {{event.desc}} </td>
+                    <td>{{event.date}}</td>
+                    <td><a href="/update/{{event.id}}" data-toggle="modal" data-target="#exampleModalCenter">Update</a>
+                      <a href="/delete/{{event.id}}">Delete</a>
+                    </td>
                   </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>fxdgdf</td>
-                    <td colspan="2">fgf</td>
-                    <td>fxdgdf</td>
-                    <td><button type="submit" class="btn btn-default bg-primary">Submit</button>
-                        <button type="submit" class="btn btn-default bg-primary">Delete</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>fxdgdf</td>
-                    <td colspan="2">fgf</td>
-                    <td>fxdgdf</td>
-                    <td><button type="submit" class="btn btn-default bg-primary">Submit</button>
-                        <button type="submit" class="btn btn-default bg-primary">Delete</button></td>
-                  </tr>
+                  {% endfor %}
+
                   
                 </tbody>
               </table>
