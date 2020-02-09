@@ -1,20 +1,10 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 import json
-from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm 
-from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Email, Length
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
-bootstrap = Bootstrap(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+
 
 db = SQLAlchemy(app)
 
@@ -27,27 +17,6 @@ class Todo(db.Model):
 
     def __repr__(self):
         return '<Task %r>' % self.id
-
-
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(15), unique=True)
-    email = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(80))
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-class LoginForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired()])
-    password = PasswordField('password', validators=[InputRequired()])
-    remember = BooleanField('remember me')
-
-class RegisterForm(FlaskForm):
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
-    username = StringField('username', validators=[InputRequired()])
-    password = PasswordField('password', validators=[InputRequired()])
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -89,8 +58,53 @@ def index():
 
 
        car = 5
+       peter = Todo.query.filter_by(name='Kaalrarv').first()
+       return render_template('Current.html', names=names, descs=descs, dates=dates, peter=peter) # ,events=events, rows=rows)
 
-       return render_template('Current.html', names=names, descs=descs, dates=dates) # ,events=events, rows=rows)
+
+
+@app.route('/past', methods=['POST', 'GET'])
+def past():
+    
+       events = Todo.query.all()
+        #rows = Todo.query.count()
+       names = []
+       descs = []
+       dates = []
+       for event in events:
+           names.append(event.name)
+           descs.append(event.desc)
+           dates.append(event.date)
+
+    
+       return render_template('Past.html', names=names, descs=descs, dates=dates) # ,events=events, rows=rows)
+
+
+
+
+
+
+
+@app.route('/upcoming', methods=['POST', 'GET'])
+def upcoming():
+    
+       events = Todo.query.all()
+        #rows = Todo.query.count()
+       names = []
+       descs = []
+       dates = []
+       for event in events:
+           names.append(event.name)
+           descs.append(event.desc)
+           dates.append(event.date)
+
+    
+       return render_template('Upcoming.html', names=names, descs=descs, dates=dates) # ,events=events, rows=rows)
+
+
+
+
+
 
 
 @app.route('/delete/<int:id>')
@@ -100,7 +114,7 @@ def delete(id):
     try:
         db.session.delete(event_to_delete)
         db.session.commit()
-        return redirect('/')
+        return redirect('/admin')
     except:
         return "there was a problem deleting that event"
 
@@ -127,39 +141,84 @@ def update(id):
 
 
 
-@app.route('/admin', methods=['GET'])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
-    return render_template('admin.html')
+    if request.method == 'POST':
+        event_name = request.form['name']
+        event_desc = request.form['desc']
+        event_date = request.form['date']
+        new_event = Todo(name=event_name, desc=event_desc, date=event_date)
 
-@app.route('/login', methods=['GET', 'POST'])
+     
+          
+        try:
+            db.session.add(new_event)
+            db.session.commit()
+
+            return redirect('/')
+
+        except:
+            return 'there was an error'
+
+    else:
+       events = Todo.query.all()
+        #rows = Todo.query.count()
+       names = []
+       descs = []
+       dates = []
+       for event in events:
+           names.append(event.name)
+           descs.append(event.desc)
+           dates.append(event.date)
+
+       #return render_template('Current.html', names=names, descs=descs, dates=dates, peter=peter) # ,events=events, rows=rows)
+       return render_template('admin.html', events=events) 
+
+
+
+@app.route('/login', methods=['GET','POST'])
 def login():
-    form = LoginForm()
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid credentials. Please try again.'
+        else:
+            return redirect('/admin')
+    return render_template('login_page.html', error=error)
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user :
-            if user.password == form.password.data:
-                return redirect('/admin')
-        return '<h1>Invalid username or password</h1>'
-       # return '<h1>' + form.username.data + ' ' + form.password.data+ '</h1>'
-
-    return render_template('login_page.html', form=form)
-
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    form = RegisterForm()
-
-    if form.validate_on_submit():
-        new_user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+@app.route('/search', methods=['GET', 'POST'])
+def searching():
+    if request.method == 'POST':
+        squery = request.form['ing']
+        sanswer = Todo.query.filter_by(name=squery).first()
         
-        db.session.add(new_user)
-        db.session.commit()
-        return '<h1>New user has been created</h1>'
+        return render_template('result.html', sanswer=sanswer)
+    else:
+        return render_template('search.html')
 
-        #return '<h1>' + form.username.data + ' '+ form.email.data +' '+ form.password.data+ '</h1>'
 
-    return render_template('signup.html', form=form)
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

@@ -6,6 +6,10 @@
     width: 100px;
     height: 100px;
 }
+
+#Navbar {
+    display: flex;
+}
 #countdown{
     display: flex;
     align-items: flex-start;
@@ -58,7 +62,6 @@ body{
 }
 
 .navbar-dark {
-    background-color: #f64c72;
     color: #05386B;
 }
 
