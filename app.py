@@ -57,15 +57,14 @@ def index():
            descs.append(event.desc)
            dates.append(event.date)
 
-       #d = {'events': [{'name': n, 'desc': d, 'time': t} for a, d, t in zip(names, descs, dates)]}
-       #jso = json.dumps(d, indent=4)
-
-       address =  ['address1','address2']
-       temp = ['temp1','temp2']
+       
 
        d = {'event': [{'names': a, 'descs': t, 'dates': ds} for a, t, ds in zip(names, descs, dates)]}
 
-       return render_template('index.html', d=d) # ,events=events, rows=rows)
+
+       car = 5
+
+       return render_template('Current.html', names=names, descs=descs, dates=dates) # ,events=events, rows=rows)
 
 
 @app.route('/delete/<int:id>')
