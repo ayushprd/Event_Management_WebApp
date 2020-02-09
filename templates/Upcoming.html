@@ -50,12 +50,11 @@
     }
 }
 .card {
-    display:flex;
     width: 300px;
     height: 430px;
     padding: 10px;
     margin: 60px;
-    display: inline-block;
+
 }
 
 .bg-dark{
@@ -214,13 +213,14 @@ body{
     }
     var klass='<div class="card mx-auto">';
     var len=future.length
-    if(len>0&&len<=3){
-        place.className="mx-auto ";
-        place.innerHTML=future.join(',');
-    }else if(len>3){
+    if(len==1){
+        place.className="mx-auto";
+        place.innerHTML=future.join('');
+    }else if(len>1){
         place.className="mr-auto d-md-inline-flex ";
-        place.innerHTML=future.join(',');
-    }else if(len==0){
+        console.log('here')
+        place.innerHTML=future.join('');
+    }else{
         place.innerHTML="<h1>NO UPCOMING EVENTS<h1>";
     }
     

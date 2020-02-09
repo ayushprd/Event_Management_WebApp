@@ -198,13 +198,13 @@ body{
     var klass='<div class="card mx-auto">';
     var len=present.length
     console.log(len)
-    if(len>0 && len<=3){
+    if(len==1){
         place.className="mx-auto my-auto";
         place.innerHTML=present.join(',');
-    }else if(len>3){
+    }else if(len>1){
         place.className="mr-auto d-md-inline-flex ";
         place.innerHTML=present.join(',');
-    }else if(len==0){
+    }else{
         var vt='<h1 class="text-center">NO ONGOING EVENTS</h1>'
         console.log(vt);
         place.innerHTML=vt;
