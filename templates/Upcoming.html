@@ -122,8 +122,8 @@ body{
             <div class="collapse navbar-collapse mx" id="Navbar">
                 <ul class="navbar-nav ">
                         <li class="nav-item "><a class="nav-link" href="./Past.html"><span class="fa fa-home fa-lg"></span> Past</a></li>
-                        <li class="nav-item current"><a class="nav-link" href="./Current.html"><span class="fa fa-info fa-lg"></span> Current</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./Upcoming.html"><span class="fa fa-list fa-lg"></span> Upcoming</a></li>
+                        <li class="nav-item "><a class="nav-link" href="./Current.html"><span class="fa fa-info fa-lg"></span> Current</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="./Upcoming.html"><span class="fa fa-list fa-lg"></span> Upcoming</a></li>
                         <li style="float:right" class="nav-item"><a class="nav-link" href="./Admin.html"><span class="fa fa-address-card fa-lg"></span> Admin</a></li>
                 </ul>
             </div>
@@ -136,6 +136,15 @@ body{
 
             </div>
         </div>
+        <div class="container">
+            <h1>Countdown to my birthday:</h1>
+            <ul>
+              <li><span id="days"></span>days</li>
+              <li><span id="hours"></span>Hours</li>
+              <li><span id="minutes"></span>Minutes</li>
+              <li><span id="seconds"></span>Seconds</li>
+            </ul>
+          </div>
     </div>
    
 </body>
@@ -161,7 +170,9 @@ body{
     var names = {{ names|tojson}};
     var descs = {{ descs|tojson}};
     var dates = {{dates|tojson}};
-   
+    alert(names);
+    alert(descs);
+
 
 
     var date2=new Date();
@@ -176,14 +187,14 @@ body{
         console.log(date1,val)
         var title=names[i];
         var desc=descs[i];
-        console.log(desc);
         var data='<div id="countdown"><div class="well"><span id="hour" class="timer bg-success"></span><span id="min" class="timer bg-info"></span><span id="sec" class="timer bg-primary"></span></div></div>';
-        var modal='<div class="modal fade container-fluid" id="'+names[i]+'"tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">'+names[i]+'</div><div class="modal-footer footer">'+data+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Remind Me</button></div></div></div></div>';
-        var card='<div class="card mb-4 text-black bg-light" id ="'+names[i]+'">'+
+        var modal='<div class="modal fade container-fluid" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content">    <div class="modal-header"><h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">...</div><div class="modal-footer footer">'+data+'<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Remind Me</button></div></div></div></div>';
+        var card='<div class="card mb-4 text-white bg-dark" id ="'+names[i]+'">'+
             '<img class="card-img-top" src="sample.jpg" alt="Card image">'+
                 '<div class="card-body">'+
-                    '<h4 class="card-title">'+names[i]+'</h4>'+
-                    '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#'+names[i]+'">Read More</button>'+
+                    '<h4 class="card-title">'+desc+'</h4>'+
+                    '<p class="card-text">Sample text.</p>'+
+                    '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Read More</button>'+
                 '</div>'+
             '</div>'
         card=card+modal;
@@ -197,7 +208,7 @@ body{
         console.log(future)
     }
 
-    place.innerHTML=future.join(' ');
+    place.innerHTML=future.join(',');
 
     console.log(future,present,past);
     const diffTime = Math.abs(date2 - date1);

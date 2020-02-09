@@ -6,10 +6,6 @@
     width: 100px;
     height: 100px;
 }
-
-#Navbar {
-    display: flex;
-}
 #countdown{
     display: flex;
     align-items: flex-start;
