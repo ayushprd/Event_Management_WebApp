@@ -178,23 +178,36 @@ deck=[];
 var names = {{ names|tojson}};
 var descs = {{ descs|tojson}};
 var dates = {{dates|tojson}};
-alert(names[0]);
-alert(descs[0]);
-alert(dates[0]);
-myFunction();
-function myFunction(){
-    deck.push(card);
-    var len=deck.length;
-    console.log(deck);
-    if(len==1){
-        place.className="mx-auto";
-    }else if(len>3){
-        place.className="my-auto d-md-inline-flex align-self-sm-center";
-    }
-    document.getElementById("wrapper").innerHTML = deck.join('');
+alert(names);
+alert(descs);
 
-    console.log(card);   
+
+
+var date2=new Date();
+var past=[]
+var present=[]
+var future=[]
+var head='<div class="card mb-4 text-black bg-light"';
+console.log(head);
+for(var i=0;i<names.length;i++){
+    var date1=new Date(dates[i])
+    var val=((date2 - date1)/(1000*60*60))
+    console.log(date1,val)
+    if(val<0){
+       // head=head+'id="'+event[i]+'s "';
+        future.push(date1)
+    }else if(val<24 && val>0){
+        //head=head+'id="'+event[i]+' s"';
+        present.push(date1);
+    }else{
+        past.push(date1);
+        //c=c+'id="'+event[i]+' s"';
+    }
 }
+console.log(future,present,past);
+const diffTime = Math.abs(date2 - date1);
+const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+console.log(diffDays);
 
 
 
