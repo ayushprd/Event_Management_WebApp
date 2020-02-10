@@ -218,7 +218,7 @@ def admin():
            dates.append(event.date)
 
        #return render_template('Current.html', names=names, descs=descs, dates=dates, peter=peter) # ,events=events, rows=rows)
-    return render_template('admin.html', events=events) 
+    return render_template('admin.html', events=events, name=current_user.username) 
 
 
 
@@ -267,7 +267,11 @@ def searching():
 
 
 
-
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 

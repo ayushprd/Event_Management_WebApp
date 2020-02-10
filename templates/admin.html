@@ -15,9 +15,10 @@
         <nav class="navbar navbar-inverse navbar-light" style="background-color:#563d7c;">
             <div class="container-fluid">
               <div class="navbar-header">
-                <a class="navbar-brand" style="font-size: 32px !important"href="#">Admin</a>
+                <a class="navbar-brand" style="font-size: 32px !important"href="#">Welcome, {{name}}</a>
               </div>
               <ul class="navbar-nav ml-auto">
+                <li> <a href="/logout" ><button type="button" class="btn btn-primary">Logout</button></a></li>
                 <li><span><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Add event</button>
                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
