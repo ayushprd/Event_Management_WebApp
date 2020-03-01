@@ -40,8 +40,8 @@ On this Web App,
 * API used: Addevent  api for saving an event to personal calendar
 ### Installation instructions (Linux) :
 
-* Clone this repository using, `git clone https://github.com/ayushprd/D-CoderS_Hackathon_Template.git`
-* Move into the app file using ` cd D-CoderS_Hackathon_Template/'Application Code'/`
+* Clone this repository using, `https://github.com/ayushprd/Event_Management_WebApp.git`
+* Move into the app file using ` cd Event_Management_WebApp/'Application Code'/`
 * Install the dependencies using `pip3 install -r requirements.txt`
 * Finally, run `python3 app.py`
 
@@ -51,4 +51,4 @@ On this Web App,
 List of team member names and email IDs with their contributions
  - [Ayush Prasad](https://github.com/ayushprd) ayush.prd@gmail.com [Backend ]
  - [Rohan Prasad](https://github.com/iAmGroot1) studentrrp@gmail.com [Frontend of the Events page]
- - [Dixita Devi](https://github.com/DixitaDevi) dixitadevi@gmail.com [Backend and Frontend of the Admin page]
+ - [Dixita Devi](https://github.com/DixitaDevi) dixitadevi@gmail.com [Frontend of the Admin page]
